@@ -9,10 +9,12 @@ This file defines the strict behavioral contract and coding standards that any A
 All development tasks in this workspace must follow this 5-Fase cycle:
 
 ### 1. Fase 1: Setup, Riset, & Rencana No-Halu
-*   **Challenge Assumptions (XY Problem):** Never blindly accept stated goals or methods. Evaluate the foundational premises. If they are sub-optimal, correct the root issue first.
+*   **Challenge Assumptions (XY Problem):** Never blindly accept stated goals. Evaluate the foundational premises. 
+*   **Explicit Assumption Listing:** Before writing any code or specs, list your assumptions to the user (e.g. "I'm assuming this is a web app using Postgres..."). If they are wrong, the user can correct them immediately.
 *   **Research First:** Always query the web for SOTA packages and API validation to prevent using deprecated libraries or methods.
 *   **Audit Kredensial:** Identify credentials, ports, databases, and SaaS settings. Prompt the user for required inputs at the start.
-*   **Artifact-Driven:** Store workspace parameters in `setup_blueprint.md` using environment variable placeholders. Never hardcode secrets.
+*   **Artifact-Driven & Verification:** Store workspace parameters in `setup_blueprint.md` using environment variable placeholders. Never proceed to coding without a clear, verified specification.
+*   **Atomic Planning:** Break down implementation plans into bite-sized, verifyable tasks before coding.
 
 ### 2. Fase 2: Desain Estetika (`ui-designer`)
 *   Establish layout structures, typography, and styling tokens using the **`frontend-design`** guidelines.
@@ -65,6 +67,14 @@ All development tasks in this workspace must follow this 5-Fase cycle:
 
 ---
 
+## 🛡️ Anti-Rationalization & Verification Gates
+
+**Objective:** Prevent AI shortcuts ("this is too simple for tests", "I'll refactor later", "I don't need a spec for this").
+*   **Anti-Rationalization:** Do not make excuses to skip steps. Simple tasks still need acceptance criteria. Fast workflows still require safety checks.
+*   **Explicit Verification:** "Seems right" is never sufficient. Every task completion must be backed by evidence (passing tests, runtime data, successful builds). Do not declare a phase "Done" without verifiable proof.
+
+---
+
 ## 💾 Session Memory Anchoring
 
 *   **Read State:** Always read [session_state.md](file:///home/ayintaput/session_state.md) at the start of a session to recover context.
@@ -111,3 +121,12 @@ try {
 ### 3. Package & Process Management
 *   **Package Manager:** Standardize on `npm`. Do not mix with yarn or pnpm.
 *   **Local Execution:** Run development servers using `npm run dev` or equivalent local commands.
+
+### 4. Tooling & MCP Integration Strategy
+*   **Figma / Penpot MCP First:** For frontend tasks, utilize Figma or Penpot MCPs to fetch precise design tokens rather than guessing aesthetics from text.
+*   **Pragmatic External Integrations:** Rely on managed toolchains (like Composio) for broad SaaS connectivity (GitHub, Vercel, Slack). Avoid custom-building MCP servers unless strictly necessary.
+*   **Ban on Brittle APIs:** Do NOT integrate undocumented, unstable, or cookie-scraping APIs (e.g., NotebookLM MCP CLI) into the core workflow. Determinism and stability are non-negotiable.
+
+### 5. Architecture: Subagents over Skill Bloat
+*   **Zero Prompt Pollution:** Do NOT litter the workspace with hundreds of individual `SKILL.md` files or prompt templates.
+*   **Subagent Delegation:** For specific domain tasks (UI Design, QA, Refactoring), instantiate dedicated **Subagents** (e.g., `ui-designer`, `qa-engineer`) with pure, focused system prompts. This preserves the context window and eliminates instruction hallucination.
