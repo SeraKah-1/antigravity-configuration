@@ -1,4 +1,4 @@
-# Project Rules and SOTA behavior Contract
+# Project Rules and SOTA Behavior Contract
 
 This file defines the strict behavioral contract and coding standards that any AI assistant working in this workspace must adhere to.
 
@@ -42,6 +42,8 @@ All development tasks in this workspace must follow this 5-Fase cycle:
 *   **Layout Asymmetry:** Use negative space, overlaps, or high-density grids instead of uniform card grids.
 *   **Atmosphere:** Add visual depth using layered transparency, noise textures, gradient meshes, or custom borders.
 
+**⚠️ Situational Exception:** For **internal tools, admin dashboards, and data-heavy UIs**, prioritize **usability and clarity over aesthetic boldness**. Use clean, neutral palettes, standard data visualization patterns, and high-density layouts optimized for information scanning. The "bold theme" mandate applies primarily to user-facing, consumer, or portfolio products.
+
 ---
 
 ## 🧪 Skill: test-qa
@@ -77,8 +79,8 @@ All development tasks in this workspace must follow this 5-Fase cycle:
 
 ## 💾 Session Memory Anchoring
 
-*   **Read State:** Always read [session_state.md](file:///home/ayintaput/session_state.md) at the start of a session to recover context.
-*   **Write State:** Append a brief log entry to [session_state.md](file:///home/ayintaput/session_state.md) at the end of every task or file modification.
+*   **Read State:** Always read `session_state.md` (in the same directory as this file) at the start of a session to recover context.
+*   **Write State:** Append a brief log entry to `session_state.md` at the end of every task or file modification.
 *   **Compaction Policy:** Keep the log under 10 entries. When logs exceed 10 entries, condense older logs into an "Archived Logs Summary" section to maintain token efficiency (<300 tokens).
 
 ---

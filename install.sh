@@ -1,0 +1,55 @@
+#!/bin/bash
+# install.sh — Single-command setup for antigravity-configuration
+# Usage: sh -c "$(curl -fsSL https://raw.githubusercontent.com/SeraKah-1/antigravity-configuration/main/install.sh)"
+# Or after cloning: ./install.sh
+
+set -e
+
+REPO_URL="https://github.com/SeraKah-1/antigravity-configuration.git"
+CONFIG_DIR="$HOME/.antigravity-config"
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+echo -e "${GREEN}[antigravity-config]${NC} Installing..."
+
+# 1. Clone or update
+if [ -d "$CONFIG_DIR/.git" ]; then
+  echo -e "${YELLOW}→${NC} Config already exists. Pulling latest..."
+  git -C "$CONFIG_DIR" pull --ff-only origin main 2>/dev/null || echo "  (pull skipped, using local copy)"
+else
+  echo -e "${YELLOW}→${NC} Cloning config repo..."
+  git clone --depth 1 "$REPO_URL" "$CONFIG_DIR"
+fi
+
+# 2. Symlink CLAUDE.md to home (for Claude Code / Antigravity)
+ln -sf "$CONFIG_DIR/CLAUDE.md" "$HOME/CLAUDE.md"
+echo -e "${GREEN}✓${NC} Linked CLAUDE.md → $HOME/CLAUDE.md"
+
+# 3. Symlink as GEMINI.md too (same contract, different agent)
+ln -sf "$CONFIG_DIR/CLAUDE.md" "$HOME/GEMINI.md"
+echo -e "${GREEN}✓${NC} Linked GEMINI.md → $HOME/GEMINI.md"
+
+# 4. Initialize session_state.md (don't overwrite if exists)
+if [ ! -f "$HOME/session_state.md" ]; then
+  cp "$CONFIG_DIR/session_state.md" "$HOME/session_state.md"
+  echo -e "${GREEN}✓${NC} Created session_state.md"
+else
+  echo -e "${YELLOW}→${NC} session_state.md already exists, skipping (won't overwrite your logs)"
+fi
+
+# 5. Setup .env template if not present
+if [ ! -f "$HOME/.env" ]; then
+  echo "GITHUB_USERNAME=" > "$HOME/.env"
+  echo "GITHUB_PAT=" >> "$HOME/.env"
+  echo -e "${GREEN}✓${NC} Created .env template (fill in your credentials)"
+else
+  echo -e "${YELLOW}→${NC} .env already exists, skipping"
+fi
+
+echo ""
+echo -e "${GREEN}Done!${NC} Configuration installed at $CONFIG_DIR"
+echo "  CLAUDE.md & GEMINI.md symlinked to $HOME"
+echo "  Edit $HOME/.env to add your credentials"
+echo ""
+echo "To update later: git -C $CONFIG_DIR pull"
