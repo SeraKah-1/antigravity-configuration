@@ -47,9 +47,15 @@ else
   echo -e "${YELLOW}→${NC} .env already exists, skipping"
 fi
 
+# 6. Symlink token-monitor-dashboard.sh to home
+ln -sf "$CONFIG_DIR/token-monitor-dashboard.sh" "$HOME/token-monitor-dashboard.sh"
+echo -e "${GREEN}✓${NC} Linked token-monitor-dashboard.sh → $HOME/token-monitor-dashboard.sh"
+
 echo ""
 echo -e "${GREEN}Done!${NC} Configuration installed at $CONFIG_DIR"
 echo "  CLAUDE.md & GEMINI.md symlinked to $HOME"
+echo "  token-monitor-dashboard.sh symlinked to $HOME"
 echo "  Edit $HOME/.env to add your credentials"
 echo ""
+echo "To run the real-time token dashboard: bash $HOME/token-monitor-dashboard.sh"
 echo "To update later: git -C $CONFIG_DIR pull"

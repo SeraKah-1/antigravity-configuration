@@ -27,16 +27,43 @@ Idempotent — safe to run multiple times on any device.
 
 ## What's Inside
 
-| File | Purpose |
+| File / Folder | Purpose |
 |------|---------|
 | `CLAUDE.md` | **Core behavior contract** — PA-SDLC 5-phase workflow, frontend-design/test-qa/simplify skills, anti-rationalization gates, coding standards |
 | `session_state.md` | **Memory anchor** — token-efficient log with compaction policy (<10 entries, auto-archive) |
 | `install.sh` | Single-command portable setup — symlinks config to `$HOME` |
-| `token-monitor.sh` | **Token usage monitor** — estimates session token consumption, shows model limits, health warnings |
+| `token-monitor.sh` | **Token usage monitor (CLI)** — estimates session token consumption, shows model limits, health warnings |
+| `token-monitor-dashboard.sh` | **Dashboard Launcher** — shell script to launch the local real-time web dashboard |
+| `dashboard/` | **Web Dashboard App** — Express.js backend and Vanilla JS/Chart.js frontend |
 
-## Token Monitor
+## Token Monitor & Real-Time Dashboard
 
-Track your Antigravity CLI token usage and avoid hitting limits mid-session:
+Track your Antigravity CLI token usage and avoid hitting limits mid-session. We offer two options:
+
+### 1. Real-Time Web Dashboard (Recommended)
+
+A gorgeous, live-updating cyberpunk/industrial web dashboard showing token growth charts, step counts, active models, and recent tool logs. It updates in real-time as the agent works!
+
+```bash
+# Start the web dashboard (default port: 3000)
+./token-monitor-dashboard.sh
+
+# Or start it on a custom port
+./token-monitor-dashboard.sh 8080
+```
+
+Open `http://localhost:3000` (or your chosen port) in your browser.
+
+**Dashboard Features:**
+- **Live growth chart** — tracks token accumulation step-by-step using Chart.js.
+- **Session details** — active model, start time, latest active timestamp.
+- **Log Stream** — real-time list of system tool calls executed by the agent.
+- **Health status** — visual warnings (Low/Moderate/High usage) with remediation advice.
+- **Session history** — dropdown to review stats of previous CLI sessions.
+
+### 2. CLI Monitor
+
+For a quick terminal check:
 
 ```bash
 # Monitor current (latest) session
