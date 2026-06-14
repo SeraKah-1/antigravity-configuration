@@ -25,6 +25,8 @@ Setup phase completed. Key decisions made through competitive research:
 
 ## ⏱️ Recent Action Log
 
+*   **2026-06-14T10:55:00Z | Feat: Real-Time Token Monitor Web Dashboard**
+    *   *Actions:* (1) Built a lightweight Node.js/Express backend that watches CLI session transcripts. (2) Designed an industrial/cyberpunk dark-theme frontend using Chart.js to graph token growth dynamically. (3) Wrote `token-monitor-dashboard.sh` launcher and integrated dashboard symlinking/deployment into `install.sh`. (4) Validated API endpoints and pushed code to GitHub.
 *   **2026-06-14T10:45:00Z | Test: Token Monitor & Installer Verification**
     *   *Actions:* (1) Executed `token-monitor.sh` to trace estimated tokens (~276k full transcript, 467 steps) and verify model change tracking. (2) Ran `install.sh` to test single-command setup workflow (cloning, symlinking, and env stubbing). Everything succeeded.
 *   **2026-06-14T10:30:00Z | Refactor: Address Claude's Critique**
